@@ -12,9 +12,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-@Controller()
-@Controller('review')
-@ApiTags('App Review')
+@Controller('todo')
+@ApiTags('Todo')
 @ApiOkResponse({ description: 'Success' })
 @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
 @ApiBadRequestResponse({ description: 'Invalid Parameters' })
@@ -25,7 +24,7 @@ export class TodoController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @Post('todo')
+  @Post()
   async createTodo(@Body() createTodoDto: CreateTodoDto): Promise<void> {
     await this.commandBus.execute(
       new CreateTodoCommand(
@@ -36,7 +35,7 @@ export class TodoController {
     );
   }
 
-  @Get('todos')
+  @Get()
   async getTodos(): Promise<any> {
     return this.queryBus.execute(new GetTodosQuery('001'));
   }
