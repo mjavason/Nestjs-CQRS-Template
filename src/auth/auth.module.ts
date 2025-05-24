@@ -16,6 +16,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { RegisterUserHandler } from './commands/register-user/register-user.handler';
 import { ForgotPasswordHandler } from './commands/forgot-password/forgot-password.handler';
 import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
+import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler
     RegisterUserHandler,
     ForgotPasswordHandler,
     VerifyTokenHandler,
+    ResetPasswordHandler,
   ],
   exports: [AuthService],
 })

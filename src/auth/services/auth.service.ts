@@ -128,8 +128,6 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(body.newPassword, 10);
     await this.userRepository.update(user.id, { password: hashedPassword });
     await storedToken.deleteOne();
-
-    return { message: 'Password reset successfully' };
   }
 
   async verifyToken(query: VerifyTokenDto) {

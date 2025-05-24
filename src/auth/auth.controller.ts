@@ -50,6 +50,7 @@ import {
 } from '@nestjs/common';
 import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
 import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
+import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -82,18 +83,17 @@ export class AuthController {
     );
   }
 
-  /////////////////////////////////////////////
-
   @Post('verify-token')
   @ApiOperation({ summary: 'Submit token for verification' })
   async verifyToken(@Query() query: VerifyTokenDto) {
     return await this.commandBus.execute(new VerifyTokenCommand(query));
   }
+  /////////////////////////////////////////////
 
   @Post('reset-password')
   @ApiOperation({ summary: 'Submit new password with verification' })
   async resetPassword(@Body() body: NewPasswordDto) {
-    return await this.authService.resetPassword(body);
+    return await this.commandBus.execute(new ResetPasswordCommand(body));
   }
 
   @Post('login')
