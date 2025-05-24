@@ -53,6 +53,7 @@ import { VerifyTokenCommand } from './commands/verify-token/verify-token.command
 import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
 import { LoginCommand } from './commands/login/login.command';
 import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
+import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -118,15 +119,11 @@ export class AuthController {
   }
 
   @Post('refresh-token')
-  @ApiOperation({
-    summary: 'Refresh an expired token',
-  })
+  @ApiOperation({ summary: 'Refresh an expired token' })
   async refreshToken(@Body() body: RefreshTokenDto) {
-    const data = await this.authService.refreshToken(
-      body.expiredAccessToken,
-      body.refreshToken,
+    return await this.commandBus.execute(
+      new RefreshTokenCommand(body.expiredAccessToken, body.refreshToken),
     );
-    return { data };
   }
 
   @Get('google')

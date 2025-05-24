@@ -19,6 +19,7 @@ import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler
 import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
 import { LoginHandler } from './commands/login/login.handler';
 import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
+import { RefreshTokenHandler } from './commands/refresh-token/refresh-token.handler';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { RequestEmailVerificationHandler } from './commands/request-email-verifi
     ResetPasswordHandler,
     LoginHandler,
     RequestEmailVerificationHandler,
+    RefreshTokenHandler,
   ],
   exports: [AuthService],
 })
