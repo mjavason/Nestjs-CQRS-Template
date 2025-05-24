@@ -18,6 +18,7 @@ import { ForgotPasswordHandler } from './commands/forgot-password/forgot-passwor
 import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
 import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
 import { LoginHandler } from './commands/login/login.handler';
+import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { LoginHandler } from './commands/login/login.handler';
     VerifyTokenHandler,
     ResetPasswordHandler,
     LoginHandler,
+    RequestEmailVerificationHandler,
   ],
   exports: [AuthService],
 })

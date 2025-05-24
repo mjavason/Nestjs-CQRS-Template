@@ -52,6 +52,7 @@ import { ForgotPasswordCommand } from './commands/forgot-password/forgot-passwor
 import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
 import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
 import { LoginCommand } from './commands/login/login.command';
+import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -109,13 +110,11 @@ export class AuthController {
   /////////////////////////////////////////////
 
   @Post('request-mail-verification/:email')
-  @ApiOperation({
-    summary: 'Request an email verification request',
-  })
-  // @Auth()
+  @ApiOperation({ summary: 'Request an email verification request' })
   async requestEmailVerification(@Param('email') email: string) {
-    await this.authService.requestMailVerification(email.toLowerCase());
-    return { message: 'Request sent successfully' };
+    return await this.commandBus.execute(
+      new RequestEmailVerificationCommand(email.toLowerCase()),
+    );
   }
 
   @Post('refresh-token')
