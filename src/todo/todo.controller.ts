@@ -25,8 +25,8 @@ export class TodoController {
   ) {}
 
   @Post()
-  async createTodo(@Body() createTodoDto: CreateTodoDto): Promise<void> {
-    await this.commandBus.execute(
+  async createTodo(@Body() createTodoDto: CreateTodoDto) {
+    return await this.commandBus.execute(
       new CreateTodoCommand(
         '001',
         createTodoDto.title,

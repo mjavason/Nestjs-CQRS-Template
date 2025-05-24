@@ -17,12 +17,5 @@ export class CreateTodoHandler implements ICommandHandler<CreateTodoCommand> {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
-    // await this.repository.save(todo);
-
-    return {
-      //   actionId: todo.id
-      actionId: Date.now().toString(),
-    };
   }
 }

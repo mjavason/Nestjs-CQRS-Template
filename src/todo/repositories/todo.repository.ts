@@ -14,7 +14,7 @@ export class TodoRepository {
     return this.todos.find((todo) => todo.id === id);
   }
 
-  create(todo: ITodo): void {
+  create(todo: ITodo) {
     this.todos.push(todo);
   }
 
