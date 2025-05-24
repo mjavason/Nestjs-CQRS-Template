@@ -2,14 +2,14 @@ import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/services/auth.service';
 import { BASE_URL } from 'src/common/configs/constants';
-import { BucketService } from 'src/bucket/bucket.service';
+import { CommandBus } from '@nestjs/cqrs';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { generateRandomAvatar } from 'src/common/utils/dicebar.util';
 import { IDecodedToken } from 'src/auth/interfaces/auth.interface';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
 import { JwtService } from '@nestjs/jwt';
 import { LocalAuthGuard } from 'src/auth/guard/local.guard';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { RegisterUserCommand } from './commands/register-user/register-user.command';
 import { Response } from 'express';
 import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
 import { TokenRepository } from 'src/auth/repositories/token.repository';
@@ -35,7 +35,6 @@ import {
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
   Delete,
   Get,
@@ -58,8 +57,8 @@ export class AuthController {
     private authService: AuthService,
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
-    private readonly bucketService: BucketService,
     private readonly tokenRepository: TokenRepository,
+    private readonly commandBus: CommandBus,
   ) {}
 
   @Post('register')
@@ -70,23 +69,7 @@ export class AuthController {
     @UploadedFile() avatar: MulterFile,
     @Body() body: RegisterWithAvatarDTO,
   ) {
-    const emailExists = await this.userRepository.findOne({
-      email: body.email,
-    });
-    if (emailExists) throw new ConflictException('Email already exists');
-
-    // if an image was uploaded, set the avatarURL as its path
-    if (avatar) {
-      const imageUpload = await this.bucketService.uploadToCloudinary(
-        avatar.path,
-      );
-      body.avatarURL = imageUpload.url;
-    }
-
-    // if avatar link has still not been set, both manually or through form upload, generate a default
-    if (!body.avatarURL) body.avatarURL = generateRandomAvatar(body.email);
-
-    return await this.authService.register(body);
+    return await this.commandBus.execute(new RegisterUserCommand(body, avatar));
   }
 
   @Post('forgot-password/:email')

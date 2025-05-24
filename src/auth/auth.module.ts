@@ -12,9 +12,12 @@ import { TokenRepository } from './repositories/token.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Token, tokenSchema } from './entities/token.schema';
 import { JWT_SECRET } from 'src/common/configs/constants';
+import { CqrsModule } from '@nestjs/cqrs';
+import { RegisterUserHandler } from './commands/register-user/register-user.handler';
 
 @Module({
   imports: [
+    CqrsModule,
     MailModule,
     UserModule,
     PassportModule,
@@ -35,6 +38,7 @@ import { JWT_SECRET } from 'src/common/configs/constants';
     JwtStrategy,
     GoogleStrategy,
     TokenRepository,
+    RegisterUserHandler,
   ],
   exports: [AuthService],
 })

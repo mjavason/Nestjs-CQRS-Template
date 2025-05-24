@@ -1,21 +1,37 @@
-import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './common/filter/error.filter';
+import { loggerConfig } from './common/utils/logger.util';
+import { NestFactory } from '@nestjs/core';
+import { setupSwagger } from './common/configs/swagger.config';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { ValidationPipe } from '@nestjs/common';
+import { API_PREFIX, PORT } from './common/configs/constants';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    // cors: true,
+    logger: loggerConfig,
+  });
 
-  // Swagger configuration
-  const config = new DocumentBuilder()
-    .setTitle('My API')
-    .setDescription('API documentation for my NestJS application')
-    .setVersion('1.0')
-    .addBearerAuth() // Enable JWT authentication in Swagger UI (optional)
-    .build();
+  // CORS Configuration
+  app.enableCors({
+    origin: (origin, callback) => {
+      callback(null, true);
+    },
+  });
+  app.setGlobalPrefix(API_PREFIX, {
+    exclude: ['/'],
+  });
+  app.use(helmet());
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new TransformInterceptor());
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  setupSwagger(app);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(PORT);
+  console.log(`App listening on port ${PORT}`);
 }
+
 bootstrap();
