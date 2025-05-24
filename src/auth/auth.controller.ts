@@ -54,6 +54,7 @@ import { ResetPasswordCommand } from './commands/reset-password/reset-password.c
 import { LoginCommand } from './commands/login/login.command';
 import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
 import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
+import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.handler';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -108,7 +109,6 @@ export class AuthController {
   async login(@Req() req) {
     return await this.commandBus.execute(new LoginCommand(req.user.id));
   }
-  /////////////////////////////////////////////
 
   @Post('request-mail-verification/:email')
   @ApiOperation({ summary: 'Request an email verification request' })
@@ -139,16 +139,15 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleLoginCallback(@Req() req, @Res() res: Response) {
-    const data = await this.authService.socialSignIn(req.user);
-    return res.redirect(
-      `${BASE_URL}/api/v1/auth/show-working?registered=true&accessToken=${data.accessToken}&refreshToken=${data.refreshToken}`,
-    );
+    const command = new GoogleLoginCallbackCommand(req.user, res);
+    return await this.commandBus.execute(command);
   }
 
   @Get('show-working')
   async showWorking(@Query() query: unknown) {
     return { data: query };
   }
+  /////////////////////////////////////////////
 
   @Get('verify-email')
   @ApiOperation({ summary: 'Verify user email address' })

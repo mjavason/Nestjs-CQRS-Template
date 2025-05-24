@@ -20,6 +20,7 @@ import { ResetPasswordHandler } from './commands/reset-password/reset-password.h
 import { LoginHandler } from './commands/login/login.handler';
 import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
 import { RefreshTokenHandler } from './commands/refresh-token/refresh-token.handler';
+import { GoogleLoginCallbackHandler } from './commands/google-login-callback/google-login-callback.command';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { RefreshTokenHandler } from './commands/refresh-token/refresh-token.hand
     LoginHandler,
     RequestEmailVerificationHandler,
     RefreshTokenHandler,
+    GoogleLoginCallbackHandler,
   ],
   exports: [AuthService],
 })
