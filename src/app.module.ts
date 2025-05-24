@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CqrsModule } from '@nestjs/cqrs';
-import { CreateTodoHandler } from './todo/commands/create-todo.command';
-import { GetTodosHandler } from './todo/queries/get-todos.query';
-import { TodoRepository } from './todo/repositories/todo.repository';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
-  imports: [CqrsModule.forRoot()],
+  imports: [TodoModule],
   controllers: [AppController],
-  providers: [AppService, CreateTodoHandler, GetTodosHandler, TodoRepository],
+  providers: [AppService],
 })
 export class AppModule {}

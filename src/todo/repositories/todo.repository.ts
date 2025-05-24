@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ITodo } from 'src/domain/todo/todo.interface';
+import { ITodo } from 'src/todo/todo.interface';
 
 @Injectable()
 export class TodoRepository {

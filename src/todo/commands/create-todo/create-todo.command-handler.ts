@@ -1,18 +1,6 @@
-import { Command } from '@nestjs/cqrs';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TodoRepository } from 'src/todo/repositories/todo.repository';
-
-export class CreateTodoCommand extends Command<{
-  actionId: string; // This type represents the command execution result
-}> {
-  constructor(
-    public readonly userId: string,
-    public readonly title: string,
-    public readonly description: string,
-  ) {
-    super();
-  }
-}
+import { CreateTodoCommand } from './create-todo.command';
 
 @CommandHandler(CreateTodoCommand)
 export class CreateTodoHandler implements ICommandHandler<CreateTodoCommand> {
