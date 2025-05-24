@@ -17,6 +17,7 @@ import { RegisterUserHandler } from './commands/register-user/register-user.hand
 import { ForgotPasswordHandler } from './commands/forgot-password/forgot-password.handler';
 import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
 import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
+import { LoginHandler } from './commands/login/login.handler';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ResetPasswordHandler } from './commands/reset-password/reset-password.h
     ForgotPasswordHandler,
     VerifyTokenHandler,
     ResetPasswordHandler,
+    LoginHandler,
   ],
   exports: [AuthService],
 })

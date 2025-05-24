@@ -51,6 +51,7 @@ import {
 import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
 import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
 import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
+import { LoginCommand } from './commands/login/login.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -88,30 +89,24 @@ export class AuthController {
   async verifyToken(@Query() query: VerifyTokenDto) {
     return await this.commandBus.execute(new VerifyTokenCommand(query));
   }
-  /////////////////////////////////////////////
 
   @Post('reset-password')
-  @ApiOperation({ summary: 'Submit new password with verification' })
+  @ApiOperation({
+    summary:
+      'After making forgot password request, submit new password with verification',
+  })
   async resetPassword(@Body() body: NewPasswordDto) {
     return await this.commandBus.execute(new ResetPasswordCommand(body));
   }
 
   @Post('login')
-  @ApiOperation({
-    summary: 'Log in, with jwt tokens',
-  })
+  @ApiOperation({ summary: 'Log in, with jwt tokens' })
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: LoginDTO })
   async login(@Req() req) {
-    const user = await this.userRepository.findOne({ _id: req.user.id });
-    const accessToken = await this.authService.login(req.user);
-    const refreshToken = await this.authService.generateRefreshToken(user.id);
-
-    return {
-      message: 'Logged in successfully',
-      data: { user, accessToken, refreshToken },
-    };
+    return await this.commandBus.execute(new LoginCommand(req.user.id));
   }
+  /////////////////////////////////////////////
 
   @Post('request-mail-verification/:email')
   @ApiOperation({
