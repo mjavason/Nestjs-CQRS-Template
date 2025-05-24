@@ -21,6 +21,7 @@ import { LoginHandler } from './commands/login/login.handler';
 import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
 import { RefreshTokenHandler } from './commands/refresh-token/refresh-token.handler';
 import { GoogleLoginCallbackHandler } from './commands/google-login-callback/google-login-callback.command';
+import { VerifyEmailHandler } from './commands/verify-email/verify-email.handler';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { GoogleLoginCallbackHandler } from './commands/google-login-callback/goo
     RequestEmailVerificationHandler,
     RefreshTokenHandler,
     GoogleLoginCallbackHandler,
+    VerifyEmailHandler,
   ],
   exports: [AuthService],
 })

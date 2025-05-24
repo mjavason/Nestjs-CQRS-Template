@@ -55,6 +55,7 @@ import { LoginCommand } from './commands/login/login.command';
 import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
 import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
 import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.handler';
+import { VerifyEmailCommand } from './commands/verify-email/verify-email.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -152,18 +153,7 @@ export class AuthController {
   @Get('verify-email')
   @ApiOperation({ summary: 'Verify user email address' })
   async verifyEmail(@Query('token') token: string) {
-    try {
-      const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
-      await this.userRepository.update(payload.sub, {
-        isEmailVerified: true,
-      });
-
-      return { message: 'Email verified successfully' };
-    } catch (error) {
-      // Handle any errors, e.g., invalid token
-      Logger.error(error.message);
-      throw new BadRequestException('Invalid or expired token');
-    }
+    return await this.commandBus.execute(new VerifyEmailCommand(token));
   }
 
   @Delete('logout')
