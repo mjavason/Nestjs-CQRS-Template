@@ -48,6 +48,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -75,7 +76,9 @@ export class AuthController {
   @Post('forgot-password/:email')
   @ApiOperation({ summary: 'Request password reset' })
   async forgotPassword(@Param() param: ForgotPasswordDto) {
-    return await this.authService.requestForgotPassword(param.email);
+    return await this.commandBus.execute(
+      new ForgotPasswordCommand(param.email),
+    );
   }
 
   @Post('verify-token')

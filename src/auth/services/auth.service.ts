@@ -107,8 +107,6 @@ export class AuthService {
       throw new InternalServerErrorException(
         'Unable to send verification email',
       );
-
-    return { message: 'Password reset code sent to your email' };
   }
 
   async resetPassword(body: NewPasswordDto) {

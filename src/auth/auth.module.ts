@@ -14,6 +14,7 @@ import { Token, tokenSchema } from './entities/token.schema';
 import { JWT_SECRET } from 'src/common/configs/constants';
 import { CqrsModule } from '@nestjs/cqrs';
 import { RegisterUserHandler } from './commands/register-user/register-user.handler';
+import { ForgotPasswordHandler } from './commands/forgot-password/forgot-password.handler';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { RegisterUserHandler } from './commands/register-user/register-user.hand
     GoogleStrategy,
     TokenRepository,
     RegisterUserHandler,
+    ForgotPasswordHandler,
   ],
   exports: [AuthService],
 })
