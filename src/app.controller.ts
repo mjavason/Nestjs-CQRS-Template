@@ -1,10 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateTodoCommand } from './commands/create-todo.command';
-import { GetTodosQuery } from './queries/get-todos.query';
 import { Body, Post } from '@nestjs/common';
-import { CreateTodoDto } from './dtos/create-todo.dto';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Controller, Get } from '@nestjs/common';
+import { CreateTodoCommand } from './todo/commands/create-todo.command';
+import { GetTodosQuery } from './todo/queries/get-todos.query';
+import { CreateTodoDto } from './domain/todo/dtos/create-todo.dto';
 
 @Controller()
 export class AppController {

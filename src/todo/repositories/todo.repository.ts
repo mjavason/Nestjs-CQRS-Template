@@ -1,29 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { Todo } from '../models/todo.model';
+import { ITodo } from 'src/domain/todo/todo.interface';
 
 @Injectable()
 export class TodoRepository {
-  private todos: Todo[] = [];
+  private todos: ITodo[] = [];
 
-  findAll(userId: string): Todo[] {
+  findAll(userId: string): ITodo[] {
     console.log(userId);
     return this.todos;
   }
 
-  findById(id: string): Todo | undefined {
+  findById(id: string): ITodo | undefined {
     return this.todos.find((todo) => todo.id === id);
   }
 
-  create(todo: Todo): void {
+  create(todo: ITodo): void {
     this.todos.push(todo);
   }
 
-  update(id: string, updatedTodo: Partial<Todo>): Todo | undefined {
+  update(id: string, updatedITodo: Partial<ITodo>): ITodo | undefined {
     const todoIndex = this.todos.findIndex((todo) => todo.id === id);
     if (todoIndex === -1) {
       return undefined;
     }
-    this.todos[todoIndex] = { ...this.todos[todoIndex], ...updatedTodo };
+    this.todos[todoIndex] = { ...this.todos[todoIndex], ...updatedITodo };
     return this.todos[todoIndex];
   }
 
