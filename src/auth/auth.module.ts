@@ -1,27 +1,28 @@
-import { Module } from '@nestjs/common';
-import { AuthService } from './services/auth.service';
 import { AuthController } from './auth.controller';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { LocalStrategy } from './strategy/local.strategy';
-import { JwtStrategy } from './strategy/jwt.strategy';
-import { UserModule } from 'src/user/user.module';
-import { MailModule } from 'src/mail/mail.module';
-import { GoogleStrategy } from './strategy/google.strategy';
-import { TokenRepository } from './repositories/token.repository';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Token, tokenSchema } from './entities/token.schema';
-import { JWT_SECRET } from 'src/common/configs/constants';
+import { AuthService } from './services/auth.service';
 import { CqrsModule } from '@nestjs/cqrs';
-import { RegisterUserHandler } from './commands/register-user/register-user.handler';
 import { ForgotPasswordHandler } from './commands/forgot-password/forgot-password.handler';
-import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
-import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
+import { GoogleStrategy } from './strategy/google.strategy';
+import { JWT_SECRET } from 'src/common/configs/constants';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { LocalStrategy } from './strategy/local.strategy';
 import { LoginHandler } from './commands/login/login.handler';
-import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
+import { LogoutHandler } from './commands/logout/logout.handler';
+import { MailModule } from 'src/mail/mail.module';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
 import { RefreshTokenHandler } from './commands/refresh-token/refresh-token.handler';
-import { GoogleLoginCallbackHandler } from './commands/google-login-callback/google-login-callback.command';
+import { RegisterUserHandler } from './commands/register-user/register-user.handler';
+import { RequestEmailVerificationHandler } from './commands/request-email-verification/request-email-verification.handler';
+import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler';
+import { Token, tokenSchema } from './entities/token.schema';
+import { TokenRepository } from './repositories/token.repository';
+import { UserModule } from 'src/user/user.module';
 import { VerifyEmailHandler } from './commands/verify-email/verify-email.handler';
+import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
+import { GoogleLoginCallbackHandler } from './commands/google-login-callback/google-login-callback.handler';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { VerifyEmailHandler } from './commands/verify-email/verify-email.handler
     RefreshTokenHandler,
     GoogleLoginCallbackHandler,
     VerifyEmailHandler,
+    LogoutHandler,
   ],
   exports: [AuthService],
 })

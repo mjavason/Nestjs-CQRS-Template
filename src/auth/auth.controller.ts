@@ -54,8 +54,9 @@ import { ResetPasswordCommand } from './commands/reset-password/reset-password.c
 import { LoginCommand } from './commands/login/login.command';
 import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
 import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
-import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.handler';
 import { VerifyEmailCommand } from './commands/verify-email/verify-email.command';
+import { LogoutCommand } from './commands/logout/logout.command';
+import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -148,7 +149,6 @@ export class AuthController {
   async showWorking(@Query() query: unknown) {
     return { data: query };
   }
-  /////////////////////////////////////////////
 
   @Get('verify-email')
   @ApiOperation({ summary: 'Verify user email address' })
@@ -160,14 +160,6 @@ export class AuthController {
   @ApiOperation({ summary: 'Log out and invalidate refresh tokens' })
   @Auth()
   async logout(@CurrentUser() auth: IUserDocument) {
-    const token = await this.tokenRepository.findOne({
-      user: auth.id,
-      type: TOKEN_TYPE.REFRESH_TOKEN,
-    });
-    if (token) await token.deleteOne();
-
-    return {
-      message: 'Logged out successfully! Have a nice day',
-    };
+    return await this.commandBus.execute(new LogoutCommand(auth.id));
   }
 }
