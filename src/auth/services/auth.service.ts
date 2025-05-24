@@ -146,8 +146,6 @@ export class AuthService {
       await storedToken.deleteOne();
       throw new BadRequestException('Invalid or expired reset token');
     }
-
-    return { message: 'Token valid' };
   }
 
   async requestMailVerification(email) {

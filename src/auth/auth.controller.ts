@@ -49,6 +49,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
+import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -81,10 +82,12 @@ export class AuthController {
     );
   }
 
+  /////////////////////////////////////////////
+
   @Post('verify-token')
   @ApiOperation({ summary: 'Submit token for verification' })
   async verifyToken(@Query() query: VerifyTokenDto) {
-    return await this.authService.verifyToken(query);
+    return await this.commandBus.execute(new VerifyTokenCommand(query));
   }
 
   @Post('reset-password')

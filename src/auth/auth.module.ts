@@ -15,6 +15,7 @@ import { JWT_SECRET } from 'src/common/configs/constants';
 import { CqrsModule } from '@nestjs/cqrs';
 import { RegisterUserHandler } from './commands/register-user/register-user.handler';
 import { ForgotPasswordHandler } from './commands/forgot-password/forgot-password.handler';
+import { VerifyTokenHandler } from './commands/verify-token/verify-token.handler';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ForgotPasswordHandler } from './commands/forgot-password/forgot-passwor
     TokenRepository,
     RegisterUserHandler,
     ForgotPasswordHandler,
+    VerifyTokenHandler,
   ],
   exports: [AuthService],
 })
