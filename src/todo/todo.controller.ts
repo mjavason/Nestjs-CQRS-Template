@@ -2,7 +2,7 @@ import { Body, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Controller, Get } from '@nestjs/common';
 import { CreateTodoCommand } from './commands/create-todo/create-todo.command';
-import { CreateTodoDto } from './commands/create-todo/create-todo.dto';
+import { CreateTodoDto } from './dtos/create-todo.dto';
 import { GetTodosQuery } from './queries/get-todos.query';
 import {
   ApiTags,
