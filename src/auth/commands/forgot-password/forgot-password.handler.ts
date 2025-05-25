@@ -1,6 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthService } from 'src/auth/services/auth.service';
 import { ForgotPasswordCommand } from './forgot-password.command';
+
 @CommandHandler(ForgotPasswordCommand)
 export class ForgotPasswordHandler
   implements ICommandHandler<ForgotPasswordCommand>
