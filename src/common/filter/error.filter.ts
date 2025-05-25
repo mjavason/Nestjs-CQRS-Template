@@ -9,8 +9,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { APP_NAME, MESSAGES } from '../configs/constants';
-import { ApiService } from '../utils/api.util';
+import { APP_NAME, MESSAGES } from 'src/common/configs/constants';
+import { ApiService } from 'src/common/utils/api.util';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {

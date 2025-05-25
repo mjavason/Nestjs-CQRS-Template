@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Document, FilterQuery } from 'mongoose';
-import { PaginateModel } from '../interfaces';
-import { getUTCMonthStartAndEnd } from '../utils/date.util';
+import { PaginateModel } from 'src/common/interfaces';
+import { getUTCMonthStartAndEnd } from 'src/common/utils/date.util';
 
 @Injectable()
 export class GenericRepository<T extends Document> {
@@ -128,7 +128,7 @@ export class GenericRepository<T extends Document> {
 
     if (!result) {
       throw new BadRequestException(
-        'Unable to update entity, it doesnt exist?',
+        'Unable to update entity, it does not exist?',
       );
     }
 
@@ -139,7 +139,7 @@ export class GenericRepository<T extends Document> {
     const result = await this.model.findByIdAndDelete(id);
     if (!result) {
       throw new BadRequestException(
-        'Unable to delete entity, it doesnt exist?',
+        'Unable to delete entity, it does not exist?',
       );
     }
 

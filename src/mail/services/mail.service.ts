@@ -3,7 +3,7 @@ import fs from 'fs';
 import Handlebars from 'handlebars';
 import { BASE_URL, MAIL_ADDRESS } from 'src/common/configs/constants';
 import { transporter } from 'src/common/configs/mail.config';
-import { SendMailDTO, SendWelcomeMailDTO } from '../dtos/mail.dto';
+import { SendMailDTO, SendWelcomeMailDTO } from 'src/mail/dtos/mail.dto';
 
 @Injectable()
 export class MailService {

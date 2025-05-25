@@ -6,7 +6,7 @@ import {
   Status,
   USER_ROLES,
   USER_TYPES,
-} from '../interfaces/user.interface';
+} from 'src/user/interfaces/user.interface';
 
 @Schema({
   timestamps: true,

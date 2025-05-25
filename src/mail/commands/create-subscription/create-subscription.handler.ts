@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MailSubscriptionRepository } from 'src/mail/repositories/subscription.repository';
-import { CreateMailSubscriptionCommand } from './create-mail-subscription.command';
+import { CreateMailSubscriptionCommand } from './create-subscription.command';
 
 @CommandHandler(CreateMailSubscriptionCommand)
 export class CreateMailSubscriptionHandler

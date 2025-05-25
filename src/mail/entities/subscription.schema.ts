@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IMailSubscription } from '../interfaces/subscription.interface';
+import { IMailSubscription } from 'src/mail/interfaces/subscription.interface';
 
 @Schema({
   timestamps: true,

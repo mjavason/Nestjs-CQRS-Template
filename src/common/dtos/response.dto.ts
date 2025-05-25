@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginationData } from '../interfaces';
+import { PaginationData } from 'src/common/interfaces';
 
 export class ErrorResponseDTO {
   @ApiProperty()

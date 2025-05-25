@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
+import { IToken } from 'src/auth/interfaces/token.interface';
 import { User } from 'src/user/entities/user.schema';
-import { IToken } from '../interfaces/token.interface';
 
 @Schema({
   timestamps: true,

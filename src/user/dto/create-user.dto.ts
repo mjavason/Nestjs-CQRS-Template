@@ -10,7 +10,11 @@ import {
   MinLength,
 } from 'class-validator';
 import { Trim } from 'src/common/decorators/util.decorator';
-import { Status, USER_ROLES, USER_TYPES } from '../interfaces/user.interface';
+import {
+  Status,
+  USER_ROLES,
+  USER_TYPES,
+} from 'src/user/interfaces/user.interface';
 
 export class CreateUserDTO {
   @ApiProperty({ description: 'First name of the user', example: 'John' })
