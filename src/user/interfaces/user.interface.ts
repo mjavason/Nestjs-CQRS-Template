@@ -12,8 +12,6 @@ export interface IUser {
   status: string;
   avatarURL: string;
   address: string;
-  mapLongitude: number;
-  mapLatitude: number;
   signInWithGoogle: boolean;
 }
 

@@ -99,7 +99,6 @@ export class AuthService {
   async generateRefreshToken(userId: string) {
     const refreshToken = codeGenerator(9);
 
-    // Delete previous existing tokens, then create new one
     const prevRefreshToken = await this.tokenRepository.findOne({
       user: userId,
       type: TOKEN_TYPE.REFRESH_TOKEN,

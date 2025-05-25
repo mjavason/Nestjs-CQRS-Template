@@ -10,12 +10,5 @@ export class CreateMailSubscriptionDto {
   @IsEmail()
   emailAddress: string;
 
-  //   @ApiProperty({
-  //     description: 'Verification status of the subscription',
-  //     type: Boolean,
-  //     default: false,
-  //   })
-  //   @IsBoolean()
-  //   @IsOptional()
   verified?: boolean = undefined;
 }

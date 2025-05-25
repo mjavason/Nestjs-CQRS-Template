@@ -9,7 +9,7 @@ export class PaginationDTO {
     required: false,
     default: 10,
   })
-  @ConvertToInt() // Because by default any value passed through query is a string, we need to convert it back to a number.
+  @ConvertToInt()
   @IsPositive()
   @Min(1)
   pagination_size: number = 10;

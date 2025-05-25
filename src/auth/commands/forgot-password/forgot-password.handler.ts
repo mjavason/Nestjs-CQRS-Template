@@ -26,7 +26,7 @@ export class ForgotPasswordHandler
     const user = await this.userRepository.findOne({ email });
     if (!user) throw new NotFoundException('User with email does not exist');
 
-    const code = codeGenerator(6); // Generate a 6-digit code
+    const code = codeGenerator(6);
     await this.tokenRepository.create({
       user: user.id,
       type: TOKEN_TYPE.PASSWORD_RESET,
