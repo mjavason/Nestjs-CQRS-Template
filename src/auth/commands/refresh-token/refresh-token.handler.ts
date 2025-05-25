@@ -18,39 +18,41 @@ export class RefreshTokenHandler
   ) {}
 
   async execute(command: RefreshTokenCommand) {
-    const { expiredAccessToken, refreshToken: token } = command;
-    const failureMessage = 'Invalid or expired token. Please log in';
+    const { expiredAccessToken, refreshToken } = command;
+    const errorMessage = 'Invalid or expired token. Please log in';
 
     try {
-      const oldRefresh = await this.tokenRepository.findOne({ token });
-      if (!oldRefresh) throw new ForbiddenException(failureMessage);
+      const storedToken = await this.tokenRepository.findOne({
+        token: refreshToken,
+      });
+      if (!storedToken) throw new ForbiddenException(errorMessage);
 
-      // one month
-      if (isExpired(oldRefresh?.createdAt, A_MONTH_IN_MINUTES)) {
-        await oldRefresh.deleteOne();
-        throw new ForbiddenException(failureMessage);
+      if (isExpired(storedToken.createdAt, A_MONTH_IN_MINUTES)) {
+        await storedToken.deleteOne();
+        throw new ForbiddenException(errorMessage);
       }
 
-      const decoded = await this.jwtService.decode(expiredAccessToken, {
+      const decoded = this.jwtService.decode(expiredAccessToken, {
         complete: true,
       });
-      if (!decoded?.payload?.sub) throw new ForbiddenException(failureMessage);
-      if (decoded?.payload?.sub != oldRefresh.user)
-        throw new ForbiddenException(failureMessage);
+      const subject = decoded?.payload?.sub;
+      if (!subject || subject !== storedToken.user)
+        throw new ForbiddenException(errorMessage);
 
-      const newRefreshToken = await this.authService.generateRefreshToken(
-        decoded?.payload?.sub,
-      );
-      const newAccessToken = await this.jwtService.signAsync({
-        sub: decoded.payload.sub,
-      });
+      const [newRefreshToken, newAccessToken] = await Promise.all([
+        this.authService.generateRefreshToken(subject),
+        this.jwtService.signAsync({ sub: subject }),
+      ]);
 
       return {
-        data: { accessToken: newAccessToken, refreshToken: newRefreshToken },
+        data: {
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        },
       };
-    } catch (error: unknown) {
-      Logger.log(error);
-      throw new ForbiddenException(failureMessage);
+    } catch (err) {
+      Logger.log(err);
+      throw new ForbiddenException(errorMessage);
     }
   }
 }
