@@ -7,7 +7,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -18,12 +18,13 @@ import {
 } from '@nestjs/swagger';
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
+import { BroadcastMailCommand } from 'src/mail/commands/broadcast-mail/broadcast-mail.command';
 import { CreateMailSubscriptionCommand } from 'src/mail/commands/create-mail-subscription/create-mail-subscription.command';
 import { CreateMailSubscriptionDto } from 'src/mail/dtos/create-subscription.dto';
 import { FilterMailSubscriptionWithPaginationDto } from 'src/mail/dtos/filter-subscription.dto';
 import { SendMailParamsDTO } from 'src/mail/dtos/mail.dto';
+import { FindAllMailSubscriptionsQuery } from 'src/mail/queries/find-all-subscriptions/find-all-subscription.query';
 import { MailSubscriptionRepository } from 'src/mail/repositories/subscription.repository';
-import { MailService } from 'src/mail/services/mail.service';
 
 @Controller('mail-subscription')
 @ApiTags('Mail Subscription')
@@ -34,8 +35,8 @@ import { MailService } from 'src/mail/services/mail.service';
 export class MailSubscriptionController {
   constructor(
     private readonly mailSubscriptionRepository: MailSubscriptionRepository,
-    private readonly mailService: MailService,
     private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
   ) {}
 
   @Post()
@@ -51,22 +52,15 @@ export class MailSubscriptionController {
   @ApiOperation({ summary: 'Broadcast mail to all subscribers' })
   @Auth()
   async broadcast(@Body() broadcast: SendMailParamsDTO) {
-    const subscribers =
-      await this.mailSubscriptionRepository.findAllNoPagination({});
-    for (let i = 0; i < subscribers.length; i++) {
-      await this.mailService.sendSimpleMail({
-        email: subscribers[i].emailAddress,
-        ...broadcast,
-      });
-    }
-
-    return { message: 'Mail broadcast to all subscribers successfully' };
+    return await this.commandBus.execute(new BroadcastMailCommand(broadcast));
   }
 
   @Get()
   @ApiOperation({ summary: 'Retrieve all subscriptions with pagination' })
   async findAll(@Query() filter: FilterMailSubscriptionWithPaginationDto) {
-    return await this.mailSubscriptionRepository.findAll(filter);
+    return await this.queryBus.execute(
+      new FindAllMailSubscriptionsQuery(filter),
+    );
   }
 
   @Get('/:id')
@@ -76,16 +70,6 @@ export class MailSubscriptionController {
       _id: uniqueIdDTO.id,
     });
   }
-
-  //   @Patch('/:id')
-  //   @ApiOperation({ summary: 'Update an existing subscription' })
-  //   @Auth()
-  //   async update(
-  //     @Param() uniqueIdDTO: UniqueIdDTO,
-  //     @Body() updateMailSubscriptionDto: UpdateMailSubscriptionDto,
-  //   ) {
-  //     return await this.mailSubscriptionRepository.update(uniqueIdDTO.id, updateMailSubscriptionDto);
-  //   }
 
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete a subscription' })
