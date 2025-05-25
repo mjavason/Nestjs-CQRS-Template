@@ -1,28 +1,21 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
-  BadRequestException,
-  ForbiddenException,
-  Logger,
 } from '@nestjs/common';
-import {
-  BASE_URL,
-  API_PREFIX,
-  A_MONTH_IN_MINUTES,
-} from 'src/common/configs/constants';
+import { JwtService } from '@nestjs/jwt';
+import bcrypt from 'bcrypt';
+import { VerifyTokenDto } from 'src/auth/dtos/token.dto';
+import { IDecodedToken } from 'src/auth/interfaces/auth.interface';
+import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
+import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
 import { isExpired } from 'src/common/utils/date.util';
 import { codeGenerator } from 'src/common/utils/random_token.util';
 import { MailService } from 'src/mail/mail.service';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
 import { UserRepository } from 'src/user/repositories/user.repository';
-import { VerifyTokenDto } from 'src/auth/dtos/token.dto';
-import { IDecodedToken } from 'src/auth/interfaces/auth.interface';
-import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
+import { NewPasswordDto, RegisterDTO } from '../dtos/register.dto';
 import { TokenRepository } from '../repositories/token.repository';
-import { RegisterDTO, NewPasswordDto } from '../dtos/register.dto';
-import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -102,29 +95,10 @@ export class AuthService {
     }
   }
 
-  async requestMailVerification(email) {
-    const user = await this.userRepository.findOne({ email });
-    if (!user)
-      throw new BadRequestException(
-        'Request sent successfully. Check your mail',
-      );
-
-    if (!user.isEmailVerified) {
-      const verificationToken = await this.jwtService.signAsync({
-        sub: user.id,
-      });
-      await this.mailService.sendMailVerificationEmail(
-        user.email,
-        `${user.fullName}`,
-        `${BASE_URL}/${API_PREFIX}/auth/verify-email/${verificationToken}`,
-      );
-    } else {
-      throw new BadRequestException('Email already verified');
-    }
-  }
+  async requestMailVerification(email: string) {}
 
   // Don't touch
-  async generateRefreshToken(userId) {
+  async generateRefreshToken(userId: string) {
     const refreshToken = codeGenerator(9);
 
     // Delete previous existing tokens, then create new one
