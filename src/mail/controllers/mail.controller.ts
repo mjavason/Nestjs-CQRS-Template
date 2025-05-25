@@ -1,13 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/common/decorators/auth.decorator';
+import { SendSimpleMailCommand } from '../commands/send-mail/send-mail.command';
 import { SendMailDTO } from '../dtos/mail.dto';
-import { MailService } from '../services/mail.service';
 
 @Controller('mail')
 @ApiTags('Mail')
 export class MailController {
-  constructor(private readonly mailService: MailService) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Post()
   @ApiOperation({
@@ -15,6 +16,6 @@ export class MailController {
   })
   @Auth()
   create(@Body() sendMailDTO: SendMailDTO) {
-    return this.mailService.sendSimpleMail(sendMailDTO);
+    return this.commandBus.execute(new SendSimpleMailCommand(sendMailDTO));
   }
 }

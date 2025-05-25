@@ -122,7 +122,7 @@ export class MailService {
   ) => {
     // This is where the actual email message is built. Things like CC, recipients, attachments, and so on are configured here.
     return await transporter.sendMail({
-      from: `Startup <${MAIL_ADDRESS}>`,
+      from: `StartupCQRS <${MAIL_ADDRESS}>`,
       to: recipientEmail,
       subject: mailSubject,
       html: mailHtmlBody,

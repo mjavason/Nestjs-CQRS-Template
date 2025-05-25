@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const MAIL_ADDRESS = process.env.MAIL_ADDRESS || 'admin@startup.com';
+export const MAIL_ADDRESS = process.env.MAIL_ADDRESS || 'admin@startupcqrs.com';
 export const MAIL_PASSWORD = process.env.MAIL_PASSWORD || 'xxx';
 
 export const CLOUDINARY_API_NAME =
@@ -10,19 +10,20 @@ export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || '12345';
 export const CLOUDINARY_API_SECRET =
   process.env.CLOUDINARY_API_SECRET || 'xxxx';
 
-export const MONGO_DB_NAME = process.env.MONGO_DB_NAME || 'startup';
+export const MONGO_DB_NAME = process.env.MONGO_DB_NAME || 'startupcqrs';
 export const MONGO_DB_URL =
   process.env.MONGO_DB_URL + MONGO_DB_NAME ||
   'mongodb://localhost:27017/' + MONGO_DB_NAME;
 
 export const PORT = process.env.PORT || 5000;
 
-export const APP_NAME = process.env.APP_NAME || 'Startup';
+export const APP_NAME = process.env.APP_NAME || 'startupcqrs';
 export const JWT_SECRET = process.env.JWT_SECRET || 'xxx';
 export const API_PREFIX = 'api/v1';
 export const NODE_ENV = process.env.NODE_ENV || 'development';
 export const BASE_URL = process.env.BASE_URL || `http://locahost:${PORT}`;
-export const FRONTEND_URL = process.env.FRONTEND_URL || 'https://startup.com';
+export const FRONTEND_URL =
+  process.env.FRONTEND_URL || 'https://startupcqrs.com';
 
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || 'xxxx';
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || 'xxxx';
@@ -48,7 +49,7 @@ export const DISCOUNT_CAP = 2500;
 export const DEFAULT_COORDINATES = { longitude: 7.49, latitude: 6.389 };
 export const DEFAULT_ADDRESS = 'Gariki enugu';
 export const CONTACT_PHONE = '08148223122';
-export const CONTACT_EMAIL = 'startup@gmail.com';
+export const CONTACT_EMAIL = 'startupcqrs@gmail.com';
 
 export const CACHE_EXPIRY = 1000 * 1 * 60 * 60 * 12; //12 hours (milliseconds)
 
