@@ -52,6 +52,7 @@ export class RefreshTokenHandler
       };
     } catch (err) {
       Logger.log(err);
+      // space
       throw new ForbiddenException(errorMessage);
     }
   }
