@@ -24,13 +24,13 @@ export async function pagination(
       ? await this.countDocuments(filter)
       : await this.estimatedDocumentCount().exec();
 
-  const mquery = this.find(filter).limit(limit).skip(skip).sort('-createdAt');
+  const query = this.find(filter).limit(limit).skip(skip).sort('-createdAt');
 
   if (options.populate) {
-    mquery.populate(options.populate);
+    query.populate(options.populate);
   }
 
-  const docs = await mquery.exec();
+  const docs = await query.exec();
 
   const totalPages = Math.ceil(total / limit);
 
