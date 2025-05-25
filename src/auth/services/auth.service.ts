@@ -95,8 +95,6 @@ export class AuthService {
     }
   }
 
-  async requestMailVerification(email: string) {}
-
   // Don't touch
   async generateRefreshToken(userId: string) {
     const refreshToken = codeGenerator(9);
