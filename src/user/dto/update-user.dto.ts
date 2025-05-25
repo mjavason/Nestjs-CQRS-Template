@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ConvertToInt, Trim } from 'src/common/decorators/util.decorator';
 import {
   IsEmail,
   IsOptional,
@@ -7,6 +6,7 @@ import {
   IsStrongPassword,
   IsUrl,
 } from 'class-validator';
+import { ConvertToInt, Trim } from 'src/common/decorators/util.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class UpdateUserDTO {

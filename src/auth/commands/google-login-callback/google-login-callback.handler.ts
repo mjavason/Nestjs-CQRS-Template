@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { JwtService } from '@nestjs/jwt';
 import { AuthService } from 'src/auth/services/auth.service';
 import { BASE_URL } from 'src/common/configs/constants';
-import { GoogleLoginCallbackCommand } from './google-login-callback.command';
-import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from 'src/user/repositories/user.repository';
+import { GoogleLoginCallbackCommand } from './google-login-callback.command';
 
 @CommandHandler(GoogleLoginCallbackCommand)
 export class GoogleLoginCallbackHandler

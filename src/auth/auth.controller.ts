@@ -1,43 +1,3 @@
-import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
-import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from 'src/auth/services/auth.service';
-import { CommandBus } from '@nestjs/cqrs';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
-import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.command';
-import { IUserDocument } from 'src/user/interfaces/user.interface';
-import { JwtService } from '@nestjs/jwt';
-import { LocalAuthGuard } from 'src/auth/guard/local.guard';
-import { LoginCommand } from './commands/login/login.command';
-import { LogoutCommand } from './commands/logout/logout.command';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
-import { RegisterUserCommand } from './commands/register-user/register-user.command';
-import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
-import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
-import { Response } from 'express';
-import { TokenRepository } from 'src/auth/repositories/token.repository';
-import { uploadImages } from 'src/common/configs/multer.config';
-import { UserRepository } from 'src/user/repositories/user.repository';
-import { VerifyEmailCommand } from './commands/verify-email/verify-email.command';
-import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
-import {
-  ApiBody,
-  ApiConsumes,
-  ApiExcludeEndpoint,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
-import {
-  ForgotPasswordDto,
-  RefreshTokenDto,
-  VerifyTokenDto,
-} from 'src/auth/dtos/token.dto';
-import {
-  LoginDTO,
-  NewPasswordDto,
-  RegisterWithAvatarDTO,
-} from 'src/auth/dtos/register.dto';
 import {
   Body,
   Controller,
@@ -52,6 +12,46 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Response } from 'express';
+import {
+  LoginDTO,
+  NewPasswordDto,
+  RegisterWithAvatarDTO,
+} from 'src/auth/dtos/register.dto';
+import {
+  ForgotPasswordDto,
+  RefreshTokenDto,
+  VerifyTokenDto,
+} from 'src/auth/dtos/token.dto';
+import { LocalAuthGuard } from 'src/auth/guard/local.guard';
+import { TokenRepository } from 'src/auth/repositories/token.repository';
+import { AuthService } from 'src/auth/services/auth.service';
+import { uploadImages } from 'src/common/configs/multer.config';
+import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { IUserDocument } from 'src/user/interfaces/user.interface';
+import { UserRepository } from 'src/user/repositories/user.repository';
+import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
+import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.command';
+import { LoginCommand } from './commands/login/login.command';
+import { LogoutCommand } from './commands/logout/logout.command';
+import { RefreshTokenCommand } from './commands/refresh-token/refresh-token.command';
+import { RegisterUserCommand } from './commands/register-user/register-user.command';
+import { RequestEmailVerificationCommand } from './commands/request-email-verification/request-email-verification.command';
+import { ResetPasswordCommand } from './commands/reset-password/reset-password.command';
+import { VerifyEmailCommand } from './commands/verify-email/verify-email.command';
+import { VerifyTokenCommand } from './commands/verify-token/verify-token.command';
 
 @Controller('auth')
 @ApiTags('Auth')

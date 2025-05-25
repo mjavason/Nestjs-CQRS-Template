@@ -1,9 +1,8 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { IDecodedToken } from 'src/auth/interfaces/auth.interface';
 import { UserRepository } from 'src/user/repositories/user.repository';
-import { Logger } from '@nestjs/common';
 import { VerifyEmailCommand } from './verify-email.command';
 
 @CommandHandler(VerifyEmailCommand)

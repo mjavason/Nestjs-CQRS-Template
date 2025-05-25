@@ -1,11 +1,11 @@
-import { A_MONTH_IN_MINUTES } from 'src/common/configs/constants';
-import { AuthService } from 'src/auth/services/auth.service';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ForbiddenException, Logger } from '@nestjs/common';
-import { isExpired } from 'src/common/utils/date.util';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshTokenCommand } from './refresh-token.command';
 import { TokenRepository } from 'src/auth/repositories/token.repository';
+import { AuthService } from 'src/auth/services/auth.service';
+import { A_MONTH_IN_MINUTES } from 'src/common/configs/constants';
+import { isExpired } from 'src/common/utils/date.util';
+import { RefreshTokenCommand } from './refresh-token.command';
 
 @CommandHandler(RefreshTokenCommand)
 export class RefreshTokenHandler

@@ -1,12 +1,12 @@
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './common/filter/error.filter';
-import { loggerConfig } from './common/utils/logger.util';
-import { NestFactory } from '@nestjs/core';
-import { setupSwagger } from './common/configs/swagger.config';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { ValidationPipe } from '@nestjs/common';
 import { API_PREFIX, PORT } from './common/configs/constants';
+import { setupSwagger } from './common/configs/swagger.config';
+import { HttpExceptionFilter } from './common/filter/error.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { loggerConfig } from './common/utils/logger.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

@@ -1,9 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-import { BucketService } from './bucket.service';
-import { BucketController } from './bucket.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Bucket, bucketSchema } from './bucket.schema';
+import { BucketController } from './bucket.controller';
 import { BucketRepository } from './bucket.repository';
+import { Bucket, bucketSchema } from './bucket.schema';
+import { BucketService } from './bucket.service';
 
 @Global()
 @Module({

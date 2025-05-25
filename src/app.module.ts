@@ -1,18 +1,18 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Logger, Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ThrottlerModule } from '@nestjs/throttler';
+import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodoModule } from './todo/todo.module';
 import { AuthModule } from './auth/auth.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { BucketModule } from './bucket/bucket.module';
+import { CommonModule } from './common/common.module';
 import { CACHE_EXPIRY, MONGO_DB_URL } from './common/configs/constants';
 import { paginatePlugin, searchPlugin } from './common/db-plugins';
 import { MailModule } from './mail/mail.module';
+import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
-import { CacheModule } from '@nestjs/cache-manager';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [

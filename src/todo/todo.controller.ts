@@ -1,16 +1,15 @@
-import { Body, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Controller, Get } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { CreateTodoCommand } from './commands/create-todo/create-todo.command';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { GetTodosQuery } from './queries/get-todos.query';
-import {
-  ApiTags,
-  ApiOkResponse,
-  ApiInternalServerErrorResponse,
-  ApiBadRequestResponse,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
 
 @Controller('todo')
 @ApiTags('Todo')

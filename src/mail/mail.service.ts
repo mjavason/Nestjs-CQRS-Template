@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import Handlebars from 'handlebars';
 import fs from 'fs';
+import Handlebars from 'handlebars';
+import { BASE_URL, MAIL_ADDRESS } from 'src/common/configs/constants';
 import { transporter } from 'src/common/configs/mail.config';
 import { SendMailDTO, SendWelcomeMailDTO } from './mail.dto';
-import { BASE_URL, MAIL_ADDRESS } from 'src/common/configs/constants';
 
 @Injectable()
 export class MailService {

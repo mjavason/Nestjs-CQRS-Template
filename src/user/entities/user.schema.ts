@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 import {
   IUser,
-  USER_ROLES,
   Status,
+  USER_ROLES,
   USER_TYPES,
 } from '../interfaces/user.interface';
 

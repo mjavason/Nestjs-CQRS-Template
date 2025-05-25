@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { UserRepository } from './repositories/user.repository';
-import { User, userSchema } from './entities/user.schema';
-import { MongooseModule } from '@nestjs/mongoose';
-import { MailModule } from 'src/mail/mail.module';
 import { JwtModule } from '@nestjs/jwt';
+import { MongooseModule } from '@nestjs/mongoose';
 import { JWT_SECRET } from 'src/common/configs/constants';
+import { MailModule } from 'src/mail/mail.module';
+import { User, userSchema } from './entities/user.schema';
+import { UserRepository } from './repositories/user.repository';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 @Module({
   imports: [

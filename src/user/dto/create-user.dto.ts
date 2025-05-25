@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
+  IsBoolean,
   IsEmail,
   IsEnum,
-  IsBoolean,
   IsNotEmpty,
-  MinLength,
   IsOptional,
+  IsString,
   IsUrl,
+  MinLength,
 } from 'class-validator';
-import { USER_TYPES, USER_ROLES, Status } from '../interfaces/user.interface';
 import { Trim } from 'src/common/decorators/util.decorator';
+import { Status, USER_ROLES, USER_TYPES } from '../interfaces/user.interface';
 
 export class CreateUserDTO {
   @ApiProperty({ description: 'First name of the user', example: 'John' })

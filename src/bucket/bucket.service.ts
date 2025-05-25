@@ -1,5 +1,5 @@
-import { cloudinaryInstance } from 'src/common/configs/cloudinary.config';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { cloudinaryInstance } from 'src/common/configs/cloudinary.config';
 import { APP_NAME } from 'src/common/configs/constants';
 import { BucketRepository } from './bucket.repository';
 

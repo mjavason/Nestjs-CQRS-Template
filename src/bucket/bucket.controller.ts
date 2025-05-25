@@ -1,10 +1,3 @@
-import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
-import { BucketService } from './bucket.service';
-import { FileUploadDTO, MultiFileUploadDTO } from 'src/common/dtos/file.dto';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { upload } from 'src/common/configs/multer.config';
 import {
   BadRequestException,
   Controller,
@@ -15,7 +8,14 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { upload } from 'src/common/configs/multer.config';
+import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
+import { FileUploadDTO, MultiFileUploadDTO } from 'src/common/dtos/file.dto';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
+import { BucketService } from './bucket.service';
 
 @Controller('bucket')
 @ApiTags('File Bucket')
