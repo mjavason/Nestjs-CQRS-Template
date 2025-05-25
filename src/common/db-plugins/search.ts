@@ -1,5 +1,5 @@
 import { FilterQuery, PopulateOptions } from 'mongoose';
-import { PaginationOptions } from '../interfaces';
+import { PaginationOptions } from 'src/common/interfaces';
 
 export async function search(
   queryFilter: {

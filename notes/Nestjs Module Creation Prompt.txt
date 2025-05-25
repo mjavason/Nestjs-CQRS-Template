@@ -54,7 +54,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Generic } from './generic.schema';
-import { GenericService } from '../common/services/generic.service'; 
+import { GenericService } from 'src/common/services/generic.service'; 
 import { IGenericDocument } from './generic.interface';
 
 @Injectable()

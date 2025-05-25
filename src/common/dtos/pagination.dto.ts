@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsPositive, Min } from 'class-validator';
-import { ConvertToInt } from '../decorators/util.decorator';
+import { ConvertToInt } from 'src/common/decorators/util.decorator';
 
 export class PaginationDTO {
   @ApiProperty({

@@ -6,8 +6,11 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { MESSAGES } from '../configs/constants';
-import { ErrorResponseDTO, SuccessResponseDTO } from '../dtos/response.dto';
+import { MESSAGES } from 'src/common/configs/constants';
+import {
+  ErrorResponseDTO,
+  SuccessResponseDTO,
+} from 'src/common/dtos/response.dto';
 
 export function SwaggerResponses(): ClassDecorator {
   return applyDecorators(

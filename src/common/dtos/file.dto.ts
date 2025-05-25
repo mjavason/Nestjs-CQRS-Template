@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MulterFile } from '../interfaces/multer.interface';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class FileUploadDTO {
   @ApiProperty({

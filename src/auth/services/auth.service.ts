@@ -5,17 +5,17 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
+import { NewPasswordDto, RegisterDTO } from 'src/auth/dtos/register.dto';
 import { VerifyTokenDto } from 'src/auth/dtos/token.dto';
 import { IDecodedToken } from 'src/auth/interfaces/auth.interface';
 import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
+import { TokenRepository } from 'src/auth/repositories/token.repository';
 import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
 import { isExpired } from 'src/common/utils/date.util';
 import { codeGenerator } from 'src/common/utils/random_token.util';
 import { MailService } from 'src/mail/services/mail.service';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
 import { UserRepository } from 'src/user/repositories/user.repository';
-import { NewPasswordDto, RegisterDTO } from '../dtos/register.dto';
-import { TokenRepository } from '../repositories/token.repository';
 
 @Injectable()
 export class AuthService {

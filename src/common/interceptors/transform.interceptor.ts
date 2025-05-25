@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MESSAGES } from '../configs/constants';
-import { SuccessResponseDTO } from '../dtos/response.dto';
+import { MESSAGES } from 'src/common/configs/constants';
+import { SuccessResponseDTO } from 'src/common/dtos/response.dto';
 
 @Injectable()
 export class TransformInterceptor<T>

@@ -19,13 +19,14 @@ import {
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
 import { BroadcastMailCommand } from 'src/mail/commands/broadcast-mail/broadcast-mail.command';
-import { CreateMailSubscriptionCommand } from 'src/mail/commands/create-mail-subscription/create-mail-subscription.command';
+import { CreateMailSubscriptionCommand } from 'src/mail/commands/create-subscription/create-subscription.command';
+import { RemoveMailSubscriptionCommand } from 'src/mail/commands/remove-subscription/remove-subscription.command';
 import { CreateMailSubscriptionDto } from 'src/mail/dtos/create-subscription.dto';
 import { FilterMailSubscriptionWithPaginationDto } from 'src/mail/dtos/filter-subscription.dto';
 import { SendMailParamsDTO } from 'src/mail/dtos/mail.dto';
 import { FindAllMailSubscriptionsQuery } from 'src/mail/queries/find-all-subscriptions/find-all-subscription.query';
+import { FindOneMailSubscriptionQuery } from 'src/mail/queries/find-one-subscription/find-one-subscription.query';
 import { MailSubscriptionRepository } from 'src/mail/repositories/subscription.repository';
-import { FindOneMailSubscriptionQuery } from '../queries/find-one-subscription/find-one-subscription.query';
 
 @Controller('mail-subscription')
 @ApiTags('Mail Subscription')
@@ -76,6 +77,8 @@ export class MailSubscriptionController {
   @ApiOperation({ summary: 'Delete a subscription' })
   @Auth()
   async remove(@Param() uniqueIdDTO: UniqueIdDTO) {
-    return await this.mailSubscriptionRepository.remove(uniqueIdDTO.id);
+    return await this.commandBus.execute(
+      new RemoveMailSubscriptionCommand(uniqueIdDTO.id),
+    );
   }
 }

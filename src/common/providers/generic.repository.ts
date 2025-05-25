@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Document, FilterQuery } from 'mongoose';
-import { PaginateModel } from '../interfaces';
-import { getUTCMonthStartAndEnd } from '../utils/date.util';
+import { PaginateModel } from 'src/common/interfaces';
+import { getUTCMonthStartAndEnd } from 'src/common/utils/date.util';
 
 @Injectable()
 export class GenericRepository<T extends Document> {

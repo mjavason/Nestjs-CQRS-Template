@@ -2,8 +2,8 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/common/decorators/auth.decorator';
-import { SendSimpleMailCommand } from '../commands/send-mail/send-mail.command';
-import { SendMailDTO } from '../dtos/mail.dto';
+import { SendSimpleMailCommand } from 'src/mail/commands/send-mail/send-mail.command';
+import { SendMailDTO } from 'src/mail/dtos/mail.dto';
 
 @Controller('mail')
 @ApiTags('Mail')
