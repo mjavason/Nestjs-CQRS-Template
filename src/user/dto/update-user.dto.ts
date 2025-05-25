@@ -6,48 +6,17 @@ import {
   IsStrongPassword,
   IsUrl,
 } from 'class-validator';
-import { ConvertToInt, Trim } from 'src/common/decorators/util.decorator';
+import { Trim } from 'src/common/decorators/util.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { IUser } from '../interfaces/user.interface';
 
-export class UpdateUserDTO {
-  // @ApiProperty({
-  //   description: 'Indicates if the user’s phone number is verified',
-  //   default: undefined,
-  //   type: Boolean,
-  // })
-  // @IsBoolean()
+export class UpdateUserDTO implements IUser {
+  userType: string;
+  signInWithGoogle: boolean;
   isPhoneNumberVerified: boolean = undefined;
-
-  // @ApiProperty({
-  //   description: 'Indicates if the user’s email is verified',
-  //   default: undefined,
-  //   type: Boolean,
-  // })
-  // @IsBoolean()
   isEmailVerified: boolean = undefined;
-
-  // @ApiProperty({
-  //   description: 'Type of user',
-  //   example: 'admin',
-  //   default: undefined,
-  // })
-  // @IsString()
   USER_TYPES: string = undefined;
-
-  // @ApiProperty({
-  //   description: 'Role assigned to the user',
-  //   example: 'manager',
-  //   default: undefined,
-  // })
-  // @IsString()
   role: string = undefined;
-
-  // @ApiProperty({
-  //   description: 'Current status of the user',
-  //   example: 'active',
-  //   default: undefined,
-  // })
-  // @IsString()
   status: string = undefined;
 
   @ApiPropertyOptional({
@@ -58,26 +27,12 @@ export class UpdateUserDTO {
   address: string;
 
   @ApiPropertyOptional({
-    description: 'Longitude of the user’s location',
-  })
-  @IsOptional()
-  @ConvertToInt()
-  mapLongitude?: number;
-
-  @ApiPropertyOptional({
-    description: 'Latitude of the user’s location',
-  })
-  @IsOptional()
-  @ConvertToInt()
-  mapLatitude?: number;
-
-  @ApiPropertyOptional({
     description: 'Full name of the user',
   })
   @IsOptional()
   @IsString()
   @Trim()
-  fullName?: string;
+  fullName: string;
 
   @ApiPropertyOptional({
     description: 'Phone number of the user',
@@ -85,7 +40,7 @@ export class UpdateUserDTO {
   @IsOptional()
   @IsString()
   @Trim()
-  phoneNumber?: string;
+  phoneNumber: string;
 
   @ApiPropertyOptional({
     description: 'Email address of the user',
@@ -93,7 +48,7 @@ export class UpdateUserDTO {
   @IsOptional()
   @IsEmail()
   @Trim()
-  email?: string;
+  email: string;
 
   @ApiPropertyOptional({
     description: 'Password for the user account',
@@ -103,7 +58,7 @@ export class UpdateUserDTO {
   @IsString()
   @IsStrongPassword()
   @Trim()
-  password?: string;
+  password: string;
 
   @ApiPropertyOptional({
     description: 'URL for the user’s avatar image',
@@ -112,7 +67,7 @@ export class UpdateUserDTO {
   @IsString()
   @IsUrl()
   @Trim()
-  avatarURL?: string;
+  avatarURL: string;
 }
 
 export class UpdateUserDTOWithAvatar extends UpdateUserDTO {

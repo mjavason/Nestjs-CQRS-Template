@@ -8,6 +8,6 @@ import { IUserDocument } from 'src/user/interfaces/user.interface';
 @Injectable()
 export class UserRepository extends GenericRepository<IUserDocument> {
   constructor(@InjectModel(User.name) userModel: Model<IUserDocument>) {
-    super(userModel); // Pass the model to the GenericService constructor
+    super(userModel);
   }
 }

@@ -10,11 +10,9 @@ export class MailService {
   constructor() {}
 
   async sendWelcomeMail(mailDetails: SendWelcomeMailDTO) {
-    // Load the email template
     const templatePath = 'src/mail/templates/welcome.html';
     const confirmationLink = `${BASE_URL}/auth/welcome/${mailDetails.token}`;
 
-    // Compile the template
     const data = {
       fullName: mailDetails.fullName,
       confirmationLink: confirmationLink,
@@ -22,26 +20,21 @@ export class MailService {
     const compiledTemplate = await this.renderMailTemplate(templatePath, data);
     if (!compiledTemplate) return false;
 
-    // Send the email
     await this.sendMail(mailDetails.email, compiledTemplate, `Welcome`);
     return true;
   }
 
   async sendSimpleMail(mailDetails: SendMailDTO) {
-    // Load the email template
     const templatePath = 'src/mail/templates/base.html';
 
-    // Replace placeholders with actual data
     const data = {
       title: mailDetails.title,
       body: mailDetails.body,
       unsubscribeLink: `${BASE_URL}/api/v1/newsletter-subscription/unsubscribe/${mailDetails.email}`,
     };
-    // Compile the template
     const compiledTemplate = await this.renderMailTemplate(templatePath, data);
 
     if (!compiledTemplate) return false;
-    // Send the email
     await this.sendMail(mailDetails.email, compiledTemplate, mailDetails.title);
 
     return true;
@@ -52,36 +45,29 @@ export class MailService {
     fullName: string,
     link: string,
   ) {
-    // Load the email template
     const templatePath = 'src/mail/templates/verify_mail.html';
 
-    // Replace placeholders with actual data
     const data = {
       title: `Email Verification`,
       fullName,
       link,
     };
-    // Compile the template
     const compiledTemplate = await this.renderMailTemplate(templatePath, data);
 
     if (!compiledTemplate) return false;
-    // Send the email
     await this.sendMail(email, compiledTemplate, data.title);
 
     return true;
   }
 
   async sendForgotPasswordMail(email: string, fullName: string, link: string) {
-    // Load the email template
     const templatePath = 'src/mail/templates/forgot_password.html';
 
-    // Replace placeholders with actual data
     const data = {
       title: `Forgot Password`,
       fullName,
       link,
     };
-    // Compile the template
     const compiledTemplate = await this.renderMailTemplate(templatePath, data);
 
     if (!compiledTemplate) return false;
@@ -89,31 +75,6 @@ export class MailService {
 
     return true;
   }
-
-  // async sendNewsletterToAllSubscribers(newsletterTitle: string, newsletterBody: string) {
-  //   const newsletterSubscriptionService = new GeneralSoftService(NewsLetterSubscriptionModel);
-  //   const allUsers = await newsletterSubscriptionService.find({});
-
-  //   if (allUsers.length == 0) {
-  //     winstonLogger.info('No newsletter subscription found');
-  //     return;
-  //   }
-
-  //   for (const user of allUsers) {
-  //     const data = {
-  //       title: newsletterTitle,
-  //       body: newsletterBody,
-  //       unsubscribeLink: `${SITE_LINK}/api/v1/newsletter-subscription/unsubscribe/${user.id}`,
-  //     };
-  //     const templatePath = 'src/mail/templates/base.html';
-  //     const compiledTemplate = await renderMailTemplate(templatePath, data);
-
-  //     if (compiledTemplate) {
-  //       await mailService.sendMail(user.email, compiledTemplate, newsletterTitle);
-  //       winstonLogger.info(`Mail sent successfully to ${user.email}`);
-  //     }
-  //   }
-  // }
 
   private sendMail = async (
     recipientEmail: string,
@@ -131,11 +92,8 @@ export class MailService {
 
   private async renderMailTemplate(templatePath: string, data: object) {
     try {
-      // Load the email template
-      // const templatePath = './email-templates/welcome-email.html';
       const emailTemplate = fs.readFileSync(templatePath, 'utf-8');
 
-      // Compile the template
       const compiledTemplate = Handlebars.compile(emailTemplate);
       return compiledTemplate(data);
     } catch (e: unknown) {

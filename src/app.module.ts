@@ -37,7 +37,7 @@ import { UserModule } from './user/user.module';
     ]),
     CacheModule.register({
       isGlobal: true,
-      ttl: CACHE_EXPIRY, // 12 hours
+      ttl: CACHE_EXPIRY,
     }),
     CommonModule,
     MongooseModule.forRootAsync({

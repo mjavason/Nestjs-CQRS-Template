@@ -19,7 +19,6 @@ export class TransformInterceptor<T>
   ): Observable<SuccessResponseDTO> {
     return next.handle().pipe(
       map((data) => {
-        // Initialize response object with default status
         const response: SuccessResponseDTO = {
           success: true,
           message: MESSAGES.SUCCESSFUL,

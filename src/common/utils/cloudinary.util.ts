@@ -1,6 +1,5 @@
 import { cloudinaryInstance } from 'src/common/configs/cloudinary.config';
 
-// Upload a file to Cloudinary
 export const uploadToCloudinary = async (
   path: string,
   folder: string = 'Uploads',
@@ -22,17 +21,15 @@ export const uploadRawFileToCloudinary = async (
 ) => {
   try {
     const uploadResult = await cloudinaryInstance.uploader.upload(filePath, {
-      resource_type: 'raw', // Set resource type to 'raw'
+      resource_type: 'raw',
       folder,
     });
-    // console.log('Uploaded successfully:', uploadResult);
     return uploadResult;
   } catch (error) {
     console.error('Error uploading to Cloudinary:', error);
   }
 };
 
-// Delete a file from Cloudinary
 export const deleteFromCloudinary = async (public_id: string): Promise<any> => {
   try {
     const result = await cloudinaryInstance.uploader.destroy(public_id);
@@ -43,7 +40,6 @@ export const deleteFromCloudinary = async (public_id: string): Promise<any> => {
   }
 };
 
-// Fetch details of an uploaded file
 export const fetchCloudinaryFileDetails = async (
   public_id: string,
 ): Promise<any> => {
@@ -56,7 +52,6 @@ export const fetchCloudinaryFileDetails = async (
   }
 };
 
-// List files in a folder
 export const listFilesInCloudinaryFolder = async (
   folder: string,
 ): Promise<any> => {
@@ -64,7 +59,7 @@ export const listFilesInCloudinaryFolder = async (
     const result = await cloudinaryInstance.api.resources({
       type: 'upload',
       prefix: folder,
-      resource_type: 'raw', // This stuff stressed me
+      resource_type: 'raw',
     });
     return result;
   } catch (error) {
@@ -73,7 +68,6 @@ export const listFilesInCloudinaryFolder = async (
   }
 };
 
-// Rename a file in Cloudinary
 export const renameCloudinaryFile = async (
   public_id: string,
   new_public_id: string,
@@ -90,7 +84,6 @@ export const renameCloudinaryFile = async (
   }
 };
 
-// Bulk delete files in Cloudinary
 export const bulkDeleteFromCloudinary = async (
   public_ids: string[],
 ): Promise<any> => {
@@ -103,7 +96,6 @@ export const bulkDeleteFromCloudinary = async (
   }
 };
 
-// Delete a folder from Cloudinary
 export const deleteCloudinaryFolder = async (folder: string): Promise<any> => {
   try {
     const result = await cloudinaryInstance.api.delete_folder(folder);
@@ -118,24 +110,20 @@ export async function fetchLatestUploadedFileInFolder(
   folder: string = 'Uploads',
 ) {
   try {
-    // Fetch all resources in the folder
     const response = await cloudinaryInstance.api.resources({
       type: 'upload',
       prefix: folder,
-      max_results: 500, // Get as many results as allowed (500 is the limit per request)
-      resource_type: 'raw', // We're looking for raw files
+      max_results: 500,
+      resource_type: 'raw',
     });
 
     if (response.resources.length > 0) {
-      // Sort files manually by 'created_at'
       const sortedFiles = response.resources.sort(
         (a: any, b: any) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
       );
 
-      // Get the latest file
       const latestFile = sortedFiles[0];
-      // console.log('Latest uploaded file:', latestFile);
       return latestFile;
     } else {
       console.log('No files found in the specified folder.');

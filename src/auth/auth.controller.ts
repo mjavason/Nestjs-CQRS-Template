@@ -13,7 +13,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -35,13 +34,10 @@ import {
   VerifyTokenDto,
 } from 'src/auth/dtos/token.dto';
 import { LocalAuthGuard } from 'src/auth/guard/local.guard';
-import { TokenRepository } from 'src/auth/repositories/token.repository';
-import { AuthService } from 'src/auth/services/auth.service';
 import { uploadImages } from 'src/common/configs/multer.config';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
-import { UserRepository } from 'src/user/repositories/user.repository';
 import { ForgotPasswordCommand } from './commands/forgot-password/forgot-password.command';
 import { GoogleLoginCallbackCommand } from './commands/google-login-callback/google-login-callback.command';
 import { LoginCommand } from './commands/login/login.command';
@@ -57,13 +53,7 @@ import { VerifyTokenCommand } from './commands/verify-token/verify-token.command
 @ApiTags('Auth')
 // @SwaggerResponses()
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
-    private readonly tokenRepository: TokenRepository,
-    private readonly commandBus: CommandBus,
-  ) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Sign up' })
