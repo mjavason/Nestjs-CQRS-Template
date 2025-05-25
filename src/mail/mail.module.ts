@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CreateMailSubscriptionHandler } from './commands/create-mail-subscription/create-mail-subscription.handler';
 import { SendSimpleMailHandler } from './commands/send-mail/send-mail.handler';
 import { MailController } from './controllers/mail.controller';
 import { MailSubscriptionController } from './controllers/subscription.controller';
@@ -8,8 +9,8 @@ import {
   MailSubscription,
   mailSubscriptionSchema,
 } from './entities/subscription.schema';
+import { MailSubscriptionRepository } from './repositories/subscription.repository';
 import { MailService } from './services/mail.service';
-import { MailSubscriptionService } from './services/subscription.service';
 
 @Module({
   imports: [
@@ -19,7 +20,12 @@ import { MailSubscriptionService } from './services/subscription.service';
     ]),
   ],
   controllers: [MailController, MailSubscriptionController],
-  providers: [MailService, MailSubscriptionService, SendSimpleMailHandler],
+  providers: [
+    MailService,
+    MailSubscriptionRepository,
+    SendSimpleMailHandler,
+    CreateMailSubscriptionHandler,
+  ],
   exports: [MailService],
 })
 export class MailModule {}

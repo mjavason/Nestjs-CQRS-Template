@@ -6,10 +6,10 @@ import { MailSubscription } from '../entities/subscription.schema';
 import { IMailSubscriptionDocument } from '../interfaces/subscription.interface';
 
 @Injectable()
-export class MailSubscriptionService extends GenericRepository<IMailSubscriptionDocument> {
+export class MailSubscriptionRepository extends GenericRepository<IMailSubscriptionDocument> {
   constructor(
     @InjectModel(MailSubscription.name)
-    private mailSubscriptionModel: Model<IMailSubscriptionDocument>,
+    mailSubscriptionModel: Model<IMailSubscriptionDocument>,
   ) {
     super(mailSubscriptionModel);
   }
