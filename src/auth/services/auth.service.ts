@@ -65,14 +65,6 @@ export class AuthService {
     return await this.jwtService.signAsync(payload);
   }
 
-  async socialSignIn(socialUser: {
-    fullName: string;
-    avatarURL: string;
-    email: string;
-  }) {}
-
-  async requestForgotPassword(email: string) {}
-
   async resetPassword(body: NewPasswordDto) {
     const user = await this.userRepository.findOne({ email: body.email });
     if (!user) throw new BadRequestException('Invalid token');
@@ -128,39 +120,6 @@ export class AuthService {
       );
     } else {
       throw new BadRequestException('Email already verified');
-    }
-  }
-
-  async refreshToken(expiredAccessToken: string, token: string) {
-    const failureMessage = 'Invalid or expired token. Please log in';
-    try {
-      const oldRefresh = await this.tokenRepository.findOne({ token });
-      if (!oldRefresh) throw new ForbiddenException(failureMessage);
-
-      // one month
-      if (isExpired(oldRefresh?.createdAt, A_MONTH_IN_MINUTES)) {
-        await oldRefresh.deleteOne();
-        throw new ForbiddenException(failureMessage);
-      }
-
-      const decoded = await this.jwtService.decode(expiredAccessToken, {
-        complete: true,
-      });
-      if (!decoded?.payload?.sub) throw new ForbiddenException(failureMessage);
-      if (decoded?.payload?.sub != oldRefresh.user)
-        throw new ForbiddenException(failureMessage);
-
-      const newRefreshToken = await this.generateRefreshToken(
-        decoded?.payload?.sub,
-      );
-      const newAccessToken = await this.jwtService.signAsync({
-        sub: decoded.payload.sub,
-      });
-
-      return { accessToken: newAccessToken, refreshToken: newRefreshToken };
-    } catch (error: unknown) {
-      Logger.log(error);
-      throw new ForbiddenException(failureMessage);
     }
   }
 
