@@ -87,27 +87,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  async requestForgotPassword(email: string) {
-    const user = await this.userRepository.findOne({ email });
-    if (!user) throw new NotFoundException('User with email does not exist');
-
-    const code = codeGenerator(6); // Generate a 6-digit code
-    await this.tokenRepository.create({
-      user: user.id,
-      type: TOKEN_TYPE.PASSWORD_RESET,
-      token: code,
-    });
-
-    const mailSent = await this.mailService.sendForgotPasswordMail(
-      email,
-      user.fullName,
-      code,
-    );
-    if (!mailSent)
-      throw new InternalServerErrorException(
-        'Unable to send verification email',
-      );
-  }
+  async requestForgotPassword(email: string) {}
 
   async resetPassword(body: NewPasswordDto) {
     const user = await this.userRepository.findOne({ email: body.email });
