@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepository } from './user.service';
+import { UserRepository } from 'src/user/repositories/user.repository';
 
 describe('UserRepository', () => {
   let service: UserRepository;
