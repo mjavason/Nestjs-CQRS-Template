@@ -54,6 +54,5 @@ export class RefreshTokenHandler
       Logger.log(err);
       throw new ForbiddenException(errorMessage);
     }
-    v;
   }
 }
