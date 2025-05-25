@@ -1,5 +1,5 @@
 import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { UpdateUserDTOWithAvatar } from '../dto/update-user.dto';
+import { UpdateUserDTOWithAvatar } from '../../dto/update-user.dto';
 
 export class UpdateUserProfileCommand {
   constructor(
