@@ -8,6 +8,7 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { upload } from 'src/common/configs/multer.config';
@@ -15,12 +16,14 @@ import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { FileUploadDTO, MultiFileUploadDTO } from 'src/common/dtos/file.dto';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
-import { BucketService } from './bucket.service';
+import { DeleteUploadCommand } from './commands/delete-upload/delete-upload.command';
+import { UploadFileCommand } from './commands/upload-file/upload-file.handler';
+import { UploadMultipleFilesCommand } from './commands/upload-multiple/upload-multiple.command';
 
 @Controller('bucket')
 @ApiTags('File Bucket')
 export class BucketController {
-  constructor(private readonly bucketService: BucketService) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Post('upload')
   @ApiOperation({
@@ -35,13 +38,9 @@ export class BucketController {
     @CurrentUser() auth: IUserDocument,
   ) {
     if (!uploadedFile) throw new BadRequestException('No file uploaded');
-
-    const data = await this.bucketService.uploadToCloudinary(
-      uploadedFile.path,
-      auth.id,
-      auth.id,
+    return await this.commandBus.execute(
+      new UploadFileCommand(uploadedFile.path, auth.id),
     );
-    return { data: data.url };
   }
 
   @Post('upload-multiple')
@@ -57,25 +56,11 @@ export class BucketController {
     @UploadedFiles() files: MulterFile[],
     @CurrentUser() auth: IUserDocument,
   ) {
-    const uploadedFiles = files.filter(
-      (file) => file.fieldname === 'uploadedFiles',
+    const filtered = files.filter((file) => file.fieldname === 'uploadedFiles');
+    if (filtered.length < 1) throw new BadRequestException('No files uploaded');
+    return await this.commandBus.execute(
+      new UploadMultipleFilesCommand(filtered, auth.id),
     );
-    if (uploadedFiles.length < 1)
-      throw new BadRequestException('No files uploaded');
-
-    // Upload all files concurrently and wait for them to finish
-    const uploadedFilesArray = await Promise.all(
-      uploadedFiles.map(async (file) => {
-        const fileUploaded = await this.bucketService.uploadToCloudinary(
-          file.path,
-          auth.id, // folder
-          auth.id, // author
-        );
-        return fileUploaded.url;
-      }),
-    );
-
-    return uploadedFilesArray;
   }
 
   @Delete('delete-upload/:url')
@@ -89,6 +74,6 @@ export class BucketController {
     @Param('url') url: string,
     @CurrentUser() auth: IUserDocument,
   ) {
-    return await this.bucketService.deleteFromCloudinary(url, auth.id);
+    return await this.commandBus.execute(new DeleteUploadCommand(url, auth.id));
   }
 }

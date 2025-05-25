@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericRepository } from 'src/common/providers/generic.repository';
-import { IBucketDocument } from './bucket.interface';
-import { Bucket } from './bucket.schema';
+import { Bucket } from '../entities/bucket.schema';
+import { IBucketDocument } from '../interfaces/bucket.interface';
 
 @Injectable()
 export class BucketRepository extends GenericRepository<IBucketDocument> {

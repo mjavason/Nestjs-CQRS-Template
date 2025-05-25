@@ -5,7 +5,7 @@ constants
 entities
 interfaces
 services
-
 dtos
 --controller
 --interface
+--module

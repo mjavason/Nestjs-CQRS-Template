@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BucketController } from './bucket.controller';
-import { BucketService } from './bucket.service';
+import { BucketService } from './services/bucket.service';
 
 describe('BucketController', () => {
   let controller: BucketController;

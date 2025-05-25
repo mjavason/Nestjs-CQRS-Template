@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { BucketService } from 'src/bucket/bucket.service';
+import { BucketService } from 'src/bucket/services/bucket.service';
 import { uploadImages } from 'src/common/configs/multer.config';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
