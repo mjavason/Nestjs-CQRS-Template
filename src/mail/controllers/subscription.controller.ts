@@ -25,6 +25,7 @@ import { FilterMailSubscriptionWithPaginationDto } from 'src/mail/dtos/filter-su
 import { SendMailParamsDTO } from 'src/mail/dtos/mail.dto';
 import { FindAllMailSubscriptionsQuery } from 'src/mail/queries/find-all-subscriptions/find-all-subscription.query';
 import { MailSubscriptionRepository } from 'src/mail/repositories/subscription.repository';
+import { FindOneMailSubscriptionQuery } from '../queries/find-one-subscription/find-one-subscription.query';
 
 @Controller('mail-subscription')
 @ApiTags('Mail Subscription')
@@ -66,9 +67,9 @@ export class MailSubscriptionController {
   @Get('/:id')
   @ApiOperation({ summary: 'Retrieve a subscription by ID' })
   async findOne(@Param() uniqueIdDTO: UniqueIdDTO) {
-    return await this.mailSubscriptionRepository.findOne({
-      _id: uniqueIdDTO.id,
-    });
+    return await this.queryBus.execute(
+      new FindOneMailSubscriptionQuery(uniqueIdDTO.id),
+    );
   }
 
   @Delete('/:id')

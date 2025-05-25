@@ -11,6 +11,7 @@ import {
   mailSubscriptionSchema,
 } from './entities/subscription.schema';
 import { FindAllMailSubscriptionsHandler } from './queries/find-all-subscriptions/find-all-subscriptions.handler';
+import { FindOneMailSubscriptionHandler } from './queries/find-one-subscription/find-one-subscription.handler';
 import { MailSubscriptionRepository } from './repositories/subscription.repository';
 import { MailService } from './services/mail.service';
 
@@ -29,6 +30,7 @@ import { MailService } from './services/mail.service';
     CreateMailSubscriptionHandler,
     BroadcastMailHandler,
     FindAllMailSubscriptionsHandler,
+    FindOneMailSubscriptionHandler,
   ],
   exports: [MailService],
 })
