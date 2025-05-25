@@ -59,6 +59,7 @@ export class AuthService {
     };
   }
 
+  // Don't touch
   async login(user: IUserDocument) {
     const payload: IDecodedToken = { sub: user.id };
     return await this.jwtService.signAsync(payload);
@@ -68,24 +69,7 @@ export class AuthService {
     fullName: string;
     avatarURL: string;
     email: string;
-  }) {
-    const email = socialUser.email.toLowerCase().trim();
-    let user = await this.userRepository.findOne({ email });
-    if (!user) {
-      user = await this.userRepository.create({
-        email: socialUser.email,
-        signInWithGoogle: true,
-        isEmailVerified: true,
-        fullName: socialUser.fullName,
-        avatarURL: socialUser.avatarURL,
-      });
-    }
-
-    const accessToken = await this.jwtService.signAsync({ sub: user.id });
-    const refreshToken = await this.generateRefreshToken(user.id);
-
-    return { accessToken, refreshToken };
-  }
+  }) {}
 
   async requestForgotPassword(email: string) {}
 
@@ -180,6 +164,7 @@ export class AuthService {
     }
   }
 
+  // Don't touch
   async generateRefreshToken(userId) {
     const refreshToken = codeGenerator(9);
 
