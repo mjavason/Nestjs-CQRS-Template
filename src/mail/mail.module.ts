@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MailController } from './mail.controller';
-import { MailService } from './mail.service';
-import { MailSubscriptionController } from './subscription.controller';
+import { MailController } from './controllers/mail.controller';
+import { MailSubscriptionController } from './controllers/subscription.controller';
 import {
   MailSubscription,
   mailSubscriptionSchema,
-} from './subscription.schema';
-import { MailSubscriptionService } from './subscription.service';
+} from './entities/subscription.schema';
+import { MailService } from './services/mail.service';
+import { MailSubscriptionService } from './services/subscription.service';
 
 @Module({
   imports: [

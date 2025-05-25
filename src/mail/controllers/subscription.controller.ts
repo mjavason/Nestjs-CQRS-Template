@@ -17,11 +17,11 @@ import {
 } from '@nestjs/swagger';
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
-import { CreateMailSubscriptionDto } from './dto/create-subscription.dto';
-import { FilterMailSubscriptionWithPaginationDto } from './dto/filter-subscription.dto';
-import { SendMailParamsDTO } from './mail.dto';
-import { MailService } from './mail.service';
-import { MailSubscriptionService } from './subscription.service';
+import { CreateMailSubscriptionDto } from '../dtos/create-subscription.dto';
+import { FilterMailSubscriptionWithPaginationDto } from '../dtos/filter-subscription.dto';
+import { SendMailParamsDTO } from '../dtos/mail.dto';
+import { MailService } from '../services/mail.service';
+import { MailSubscriptionService } from '../services/subscription.service';
 
 @Controller('mail-subscription')
 @ApiTags('Mail Subscription')

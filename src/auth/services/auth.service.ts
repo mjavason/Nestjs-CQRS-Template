@@ -11,7 +11,7 @@ import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
 import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
 import { isExpired } from 'src/common/utils/date.util';
 import { codeGenerator } from 'src/common/utils/random_token.util';
-import { MailService } from 'src/mail/mail.service';
+import { MailService } from 'src/mail/services/mail.service';
 import { IUserDocument } from 'src/user/interfaces/user.interface';
 import { UserRepository } from 'src/user/repositories/user.repository';
 import { NewPasswordDto, RegisterDTO } from '../dtos/register.dto';

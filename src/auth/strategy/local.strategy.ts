@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
-import { MailService } from 'src/mail/mail.service';
+import { MailService } from 'src/mail/services/mail.service';
 import { UserRepository } from 'src/user/repositories/user.repository';
 
 @Injectable()

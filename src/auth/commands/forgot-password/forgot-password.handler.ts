@@ -6,7 +6,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TOKEN_TYPE } from 'src/auth/interfaces/token.interface';
 import { TokenRepository } from 'src/auth/repositories/token.repository';
 import { codeGenerator } from 'src/common/utils/random_token.util';
-import { MailService } from 'src/mail/mail.service';
+import { MailService } from 'src/mail/services/mail.service';
 import { UserRepository } from 'src/user/repositories/user.repository';
 import { ForgotPasswordCommand } from './forgot-password.command';
 
