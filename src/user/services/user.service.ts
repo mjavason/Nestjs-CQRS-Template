@@ -2,8 +2,8 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
 import { MailService } from 'src/mail/services/mail.service';
-import { IUser } from './interfaces/user.interface';
-import { UserRepository } from './repositories/user.repository';
+import { IUser } from 'src/user/interfaces/user.interface';
+import { UserRepository } from 'src/user/repositories/user.repository';
 
 @Injectable()
 export class UserService {
