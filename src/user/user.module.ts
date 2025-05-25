@@ -5,9 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JWT_SECRET } from 'src/common/configs/constants';
 import { MailModule } from 'src/mail/mail.module';
 import { User, userSchema } from './entities/user.schema';
-import { GetUserProfileHandler } from './queries/get-user-profile/get-user-profile.handler';
 import { UserRepository } from './repositories/user.repository';
 import { UserService } from './services/user.service';
+import { UpdateUserProfileHandler } from './update-user-profile/update-user-profile.handler.';
 import { UserController } from './user.controller';
 
 @Module({
@@ -25,7 +25,7 @@ import { UserController } from './user.controller';
     }),
   ],
   controllers: [UserController],
-  providers: [UserRepository, UserService, GetUserProfileHandler],
+  providers: [UserRepository, UserService, , UpdateUserProfileHandler],
   exports: [UserRepository],
 })
 export class UserModule {}
