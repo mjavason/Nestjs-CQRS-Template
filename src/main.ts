@@ -13,7 +13,7 @@ async function bootstrap() {
     // cors: true,
     logger: loggerConfig,
   });
-  conso;
+
   app.enableCors({
     origin: (origin, callback) => {
       callback(null, true);
